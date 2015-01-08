@@ -74,7 +74,7 @@ refresh_value()
     instance_id=$1
     command_class=$2
 
-    get_url "http://192.168.40.10:8083/ZWaveAPI/Run/devices[${tstat_id}].instances[${instance_id}].commandClasses[$command_class].Get()"  > /dev/null
+    get_url "http://${cortostat_server}/ZWaveAPI/Run/devices[${tstat_id}].instances[${instance_id}].commandClasses[$command_class].Get()"  > /dev/null
 }
 
 # Request a value from Z-Way.
@@ -92,7 +92,7 @@ fetch_sensor_value()
         data_segment="data[${data_id}]"
     fi
 
-    get_url "http://192.168.40.10:8083/ZWaveAPI/Run/devices[${tstat_id}].instances[${instance_id}].commandClasses[${command_class}].${data_segment}.${value_name}.value"
+    get_url "http://${cortostat_server}/ZWaveAPI/Run/devices[${tstat_id}].instances[${instance_id}].commandClasses[${command_class}].${data_segment}.${value_name}.value"
 }
 
 # Verify parameter count.
