@@ -2,6 +2,7 @@
 
 source inc/cortostat_config.sh
 source inc/cortostat_get_url.sh
+source inc/cortostat_conversions.sh
 
 # Data structure defining attributes we can retrieve for a thermostat.
 attributes_cfg='{
@@ -92,13 +93,6 @@ fetch_sensor_value()
     fi
 
     get_url "http://192.168.40.10:8083/ZWaveAPI/Run/devices[${tstat_id}].instances[${instance_id}].commandClasses[${command_class}].${data_segment}.${value_name}.value"
-}
-
-# Convert C to F.
-celsius_to_fahrenheit()
-{
-    temp=$1
-    echo "scale=1;($temp*9/5)+32" | bc
 }
 
 # Verify parameter count.
