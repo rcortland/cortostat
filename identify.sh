@@ -7,24 +7,26 @@ usage()
 {
     echo "Usage: $0"
     echo
-    echo "Retrieve a list of thermostats from the configured Z-Wave server and print it"
-    echo "to stdout and \"thermostat_list.json\"."
+    echo "Retrieve a list of supported devices from the configured Z-Wave server and print"
+    echo "it to stdout and \"device_list.json\".  Supported devices include those with "
+    echo "device string \"General Thermostat V2\" (CT100 thermostats) and \"Routing "
+    echo "Multilevel Sensor\" (Aeotec Home Energy Meter)."
     echo
     exit 1
 }
 
-identify_thermostats()
+identify_devices()
 {
     get_url "http://192.168.40.10:8083/ZWaveAPI/Run/devices" | \
         jq -C \
             ".[] | \
-            select(.data.deviceTypeString.value == \"General Thermostat V2\") | \
-            { name: .data.givenName.value, id: .id }"
+            select(.data.deviceTypeString.value == \"General Thermostat V2\" or .data.deviceTypeString.value == \"Routing Multilevel Sensor\") | \
+            { id: .id, name: .data.givenName.value, device_type: .data.deviceTypeString.value }"
 }
 
 if [[ $# -ne 0 ]]; then
     usage
 fi
 
-identify_thermostats | tee thermostat_list.json
-sed -r -i "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" thermostat_list.json
+identify_devices | tee device_list.json
+sed -r -i "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g" device_list.json

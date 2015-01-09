@@ -35,7 +35,7 @@ RET=0
 get_url "http://${cortostat_server}/ZWaveAPI/Run/devices[${tstat_id}].instances[0].commandClasses[64].Set(${mode_map[$mode]})" > /dev/null ; let "RET += $?"
 
 # Z-Way needs few hundred usec here.
-sleep 1s
+sleep 2s
 
 # Set the temp.
 if [[ mode != "off" ]]; then
