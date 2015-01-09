@@ -17,7 +17,7 @@ device_attributes["Routing Multilevel Sensor"]='{
 }
 {
     "attribute": "power_2",
-    "instance_id": 1,
+    "instance_id": 2,
     "data_id": 4,
     "command_class": 49,
     "value_name": "val"

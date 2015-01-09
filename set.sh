@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~/cortostat
+
 source inc/cortostat_config.sh
 source inc/cortostat_get_url.sh
 source inc/cortostat_conversions.sh

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~/cortostat
+
 source inc/cortostat_config.sh
 source inc/cortostat_get_url.sh
 
@@ -24,7 +26,10 @@ identify_devices()
             { id: .id, name: .data.givenName.value, device_type: .data.deviceTypeString.value }"
 }
 
-if [[ $# -ne 0 ]]; then
+if [[ $# -eq 1 && $1 == "--cached" ]]; then
+    cat device_list.json | jq
+    exit 0
+elif [[ $# -ne 0 && ! ( $# -eq 1 && $1 == "--cached" ) ]]; then
     usage
 fi
 

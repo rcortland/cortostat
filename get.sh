@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~/cortostat
+
 source inc/cortostat_config.sh          # IP address of server.
 source inc/cortostat_get_url.sh         # Method for retrieving HTTP URLs.
 source inc/cortostat_conversions.sh     # Fahrenheit <-> Celsius conversions.
