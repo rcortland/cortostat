@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/cortostat
+cd /home/pi/cortostat
 
 source inc/cortostat_config.sh
 source inc/cortostat_get_url.sh

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/cortostat
+cd /home/pi/cortostat
 
 source inc/cortostat_config.sh          # IP address of server.
 source inc/cortostat_get_url.sh         # Method for retrieving HTTP URLs.
@@ -15,13 +15,23 @@ source inc/power_meter_attributes.sh    # Aeotec Home Energy Monitor attributes.
 # Show how to use the script and exit with an error.
 usage()
 {
-    echo "Usage: $0 <id> [attribute-list]"
-    echo "Usage: $0 <id> show-atributes"
-    echo 
-    echo "Retrieve the status of a device specified by id <id>.  The list of available"
-    echo "attributes may be shown using the parameter show-attributes, as above. If "
-    echo "attribute-list is empty, all available attributes are retrieved and shown."
+    echo "Usage: $0 <id> [attribute-list]" 
+    echo "Usage: $0 <id> show-atributes" 
+    echo  
+    echo "Retrieve the status of a device specified by id <id>.  The list of available" 
+    echo "attributes may be shown using the parameter show-attributes, as above. If " 
+    echo "attribute-list is empty, all available attributes are retrieved and shown." 
     echo
+    if [[ -f device_list.json ]]; then
+        echo "Available devices:" 
+        echo 
+        local ids=`cat device_list.json | jq .id`
+        for id in $ids; do
+            local IFS=$'\n'
+            set `cat device_list.json | jq -r ". | select(.id == $id) | .name, .device_type"`        
+            printf "   %3d: %s (%s)\n" $id "$1" "$2" 
+        done
+    fi
     exit 1
 }
 
@@ -31,23 +41,23 @@ verify_parameters()
 {
     # Verify parameter count.
     if [[ $# -lt 1 ]]; then
-        usage
+        usage 
     fi
 
     device_id=$1
 
     # Verify device_list.json exists.
     if [[ ! -f device_list.json ]]; then
-        echo "Error: device_list.json cannot be found.  Have you run identify.sh?"
-        echo
-        usage
+        echo "Error: device_list.json cannot be found.  Have you run identify.sh?" 
+        echo 
+        usage 
     fi
 
     # Verify that the specified device ID is in device_list.json.
     if [[ `cat device_list.json | jq ". | select (.id == $device_id )" 2> /dev/null | wc -l` -eq 0 ]]; then
-        echo "Error: device $device_id is not listed in device_list.json.  Have you run identify.sh recently?"
-        echo
-        usage
+        echo "Error: device $device_id is not listed in device_list.json.  Have you run identify.sh recently?" 
+        echo 
+        usage 
     fi
 }
 
@@ -109,18 +119,29 @@ build_attribute_list()
     fi
 }
 
+get_attribute_details()
+{
+    set `echo ${device_attributes[$device_type]} | jq  ". | select(.attribute == \"$attribute\") | .instance_id, .data_id, .command_class, .value_name"`
+    instance_id=$1
+    data_id=$2
+    command_class=$3
+    value_name=`echo $4 | sed s%\"%%g`
+}
+
 refresh_and_get_values()
 {
-    # Iterate through sensors on the thermostat
+    # Iterate through sensors on the thermostat and requests updates from the device.
     for attribute in $attributes
     do
-        set `echo ${device_attributes[$device_type]} | jq  ". | select(.attribute == \"$attribute\") | .instance_id, .data_id, .command_class, .value_name"`
-        instance_id=$1
-        data_id=$2
-        command_class=$3
-        value_name=`echo $4 | sed s%\"%%g`
-
+        get_attribute_details
         refresh_value $instance_id $command_class
+    done
+
+    sleep 1s
+
+    for attribute in $attributes
+    do
+        get_attribute_details
         value_map[$attribute]=`fetch_sensor_value $instance_id $data_id $command_class $value_name`
     done
 }
@@ -154,6 +175,6 @@ for attribute in $attributes
 do
     result="${result}, \"$attribute\": ${value_map[${attribute}]}"
 done
-result="${result} }"
+result="${result}, \"utc\": `date -u +%s` }"
 
-echo $result  | jq
+echo $result  | jq .
