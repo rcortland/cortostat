@@ -30,6 +30,13 @@ device_attributes["General Thermostat V2"]='{
     "value_name": "val"
 }
 {
+    "attribute": "cool_setpoint",
+    "instance_id": 0,
+    "data_id": 2,
+    "command_class": 67,
+    "value_name": "val"
+}
+{
     "attribute": "status",
     "instance_id": 0,
     "data_id": "",
@@ -54,6 +61,10 @@ function map_thermostat_values()
     # Convert raw values to formatted values.
     if [[ ! -z ${value_map[heat_setpoint]} ]]; then
         value_map[heat_setpoint]=`celsius_to_fahrenheit ${value_map[heat_setpoint]}`
+    fi
+
+    if [[ ! -z ${value_map[cool_setpoint]} ]]; then
+        value_map[cool_setpoint]=`celsius_to_fahrenheit ${value_map[cool_setpoint]}`
     fi
 
     if [[ ! -z ${value_map[temperature]} ]]; then

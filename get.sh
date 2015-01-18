@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/pi/cortostat
+cd /home/cort/cortostat
 
 source inc/cortostat_config.sh          # IP address of server.
 source inc/cortostat_get_url.sh         # Method for retrieving HTTP URLs.
@@ -137,7 +137,7 @@ refresh_and_get_values()
         refresh_value $instance_id $command_class
     done
 
-    sleep 1s
+    sleep .5s
 
     for attribute in $attributes
     do
