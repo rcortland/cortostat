@@ -27,7 +27,7 @@ identify_devices()
 }
 
 if [[ $# -eq 1 && $1 == "--cached" ]]; then
-    cat device_list.json | jq
+    cat device_list.json | jq .
     exit 0
 elif [[ $# -ne 0 && ! ( $# -eq 1 && $1 == "--cached" ) ]]; then
     usage
