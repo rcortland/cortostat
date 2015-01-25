@@ -19,7 +19,7 @@ usage()
 
 identify_devices()
 {
-    get_url "http://192.168.40.10:8083/ZWaveAPI/Run/devices" | \
+    get_url "http://${cortostat_server}/ZWaveAPI/Run/devices" | \
         jq -C \
             ".[] | \
             select(.data.deviceTypeString.value == \"General Thermostat V2\" or .data.deviceTypeString.value == \"Routing Multilevel Sensor\") | \
