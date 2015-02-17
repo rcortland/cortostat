@@ -10,9 +10,9 @@ setpoints=\
  { \"temp\": 68, \"mode\": \"heat\", \"id\": $tstat_hall } 
  { \"temp\": 65, \"mode\": \"heat\", \"id\": $tstat_guest_bath } 
  { \"temp\": 65, \"mode\": \"heat\", \"id\": $tstat_dining } 
- { \"temp\": 63, \"mode\": \"heat\", \"id\": $tstat_parlor }
- { \"temp\": 55, \"mode\": \"heat\", \"id\": $tstat_mbr }
- { \"temp\": 60, \"mode\": \"heat\", \"id\": $tstat_office }
- { \"temp\": 55, \"mode\": \"heat\", \"id\": $tstat_master_closet } "
+ { \"temp\": 65, \"mode\": \"heat\", \"id\": $tstat_office } 
+ { \"temp\": 65, \"mode\": \"heat\", \"id\": $tstat_parlor } 
+ { \"temp\": 45, \"mode\": \"heat\", \"id\": $tstat_mbr }
+ { \"temp\": 45, \"mode\": \"heat\", \"id\": $tstat_master_closet } "
 
 set_thermostats "$setpoints"

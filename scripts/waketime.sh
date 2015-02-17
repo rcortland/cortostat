@@ -11,6 +11,8 @@ setpoints=\
  { \"temp\": 72, \"mode\": \"heat\", \"id\": $tstat_kitchen }
  { \"temp\": 72, \"mode\": \"heat\", \"id\": $tstat_hall } 
  { \"temp\": 65, \"mode\": \"heat\", \"id\": $tstat_dining } 
- { \"temp\": 40, \"mode\": \"heat\", \"id\": $tstat_guest_bath } "
+ { \"temp\": 65, \"mode\": \"heat\", \"id\": $tstat_parlor } 
+ { \"temp\": 60, \"mode\": \"heat\", \"id\": $tstat_office } 
+ { \"temp\": 45, \"mode\": \"heat\", \"id\": $tstat_guest_bath } "
 
 set_thermostats "$setpoints"
