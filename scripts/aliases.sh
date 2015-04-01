@@ -9,3 +9,5 @@ tstat_master_closet=8
 tstat_dining=9
 tstat_office=10
 tstat_parlor=11
+tstat_ac=12
+tstat_fbr=13

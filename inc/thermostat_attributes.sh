@@ -60,15 +60,18 @@ function map_thermostat_values()
 {
     # Convert raw values to formatted values.
     if [[ ! -z ${value_map[heat_setpoint]} ]]; then
-        value_map[heat_setpoint]=`celsius_to_fahrenheit ${value_map[heat_setpoint]}`
+        #value_map[heat_setpoint]=`celsius_to_fahrenheit ${value_map[heat_setpoint]}`
+        value_map[heat_setpoint]=${value_map[heat_setpoint]}
     fi
 
     if [[ ! -z ${value_map[cool_setpoint]} ]]; then
-        value_map[cool_setpoint]=`celsius_to_fahrenheit ${value_map[cool_setpoint]}`
+        #value_map[cool_setpoint]=`celsius_to_fahrenheit ${value_map[cool_setpoint]}`
+        value_map[cool_setpoint]=${value_map[cool_setpoint]}
     fi
 
     if [[ ! -z ${value_map[temperature]} ]]; then
-        value_map[temperature]=`celsius_to_fahrenheit ${value_map[temperature]}`
+        #value_map[temperature]=`celsius_to_fahrenheit ${value_map[temperature]}`
+        value_map[temperature]=${value_map[temperature]}
     fi
 
     if [[ ! -z ${value_map[mode]} ]]; then

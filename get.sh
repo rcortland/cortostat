@@ -11,6 +11,7 @@ declare -A device_attributes;
 
 source inc/thermostat_attributes.sh     # CT100 thermostat attributes.
 source inc/power_meter_attributes.sh    # Aeotec Home Energy Monitor attributes.
+source inc/binary_power_switch_attributes.sh    # Aeotec Power Switch attributes.
 
 # Show how to use the script and exit with an error.
 usage()
@@ -173,7 +174,12 @@ tstat_name=`cat device_list.json | jq "select(.id == $device_id) | .name"`
 result="{ \"id\": $device_id, \"name\": $tstat_name "
 for attribute in $attributes
 do
-    result="${result}, \"$attribute\": ${value_map[${attribute}]}"
+    attribute_value="${value_map[${attribute}]}"
+    if [[ -z "$attribute_value" ]]; then
+        attribute_value="\"\""
+    fi
+
+    result="${result}, \"$attribute\": $attribute_value"
 done
 result="${result}, \"utc\": `date -u +%s` }"
 

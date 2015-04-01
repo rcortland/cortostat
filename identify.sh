@@ -22,7 +22,7 @@ identify_devices()
     get_url "http://${cortostat_server}/ZWaveAPI/Run/devices" | \
         jq -C \
             ".[] | \
-            select(.data.deviceTypeString.value == \"General Thermostat V2\" or .data.deviceTypeString.value == \"Routing Multilevel Sensor\") | \
+            select(.data.deviceTypeString.value == \"General Thermostat V2\" or .data.deviceTypeString.value == \"Routing Multilevel Sensor\" or .data.deviceTypeString.value == \"Binary Power Switch\") | \
             { id: .id, name: .data.givenName.value, device_type: .data.deviceTypeString.value }"
 }
 
